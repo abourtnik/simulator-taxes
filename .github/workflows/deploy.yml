@@ -19,16 +19,16 @@ jobs:
         run: bun run test
       - name: 🏗 Build
         run: bun run build
-    deploy:
-      name: Deploy
-      needs: test
-      if: success()
-      runs-on: ubuntu-latest
-      environment: Production
-      steps:
-        - name: 🚀 Deploy updates
-        - uses: actions/configure-pages@v4
-        - uses: actions/upload-pages-artifact@v3
-          with:
-            path: ./dist
-        - uses: actions/deploy-pages@v4
+  deploy:
+    name: Deploy
+    needs: test
+    if: success()
+    runs-on: ubuntu-latest
+    environment: Production
+    steps:
+      - name: 🚀 Deploy updates
+      - uses: actions/configure-pages@v4
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./dist
+      - uses: actions/deploy-pages@v4
