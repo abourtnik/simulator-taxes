@@ -25,13 +25,22 @@ jobs:
         run: bun run test
       - name: 🏗 Build
         run: bun run build
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v3
+        with:
+           name: site-dist
+           path: ./dist
   deploy:
     name: Deploy
     needs: test
     if: success()
     runs-on: ubuntu-latest
-    environment: Production
     steps:
+      - name: Download build artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: site-dist
+          path: ./dist
       - uses: actions/configure-pages@v4
       - uses: actions/upload-pages-artifact@v3
         with:
