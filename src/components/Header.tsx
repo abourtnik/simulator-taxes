@@ -2,7 +2,7 @@ export function Header() {
     return (
         <header className={'h-16 bg-white flex items-center justify-between p-3 border-b border-gray-300'}>
             <a href="https://abourtnik.github.io/simulator-taxes" className="flex items-center space-x-3">
-                <img src="/logo.png" className="h-15" alt="Simulateur impôt sur le revenu Logo"/>
+                <img src="logo.png" className="h-15" alt="Simulateur impôt sur le revenu Logo"/>
             </a>
             <a href="https://github.com/abourtnik/simulator-taxes" target="_blank" className="no-underline">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512" className="w-8">
