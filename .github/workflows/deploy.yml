@@ -26,7 +26,6 @@ jobs:
     runs-on: ubuntu-latest
     environment: Production
     steps:
-      - name: 🚀 Deploy updates
       - uses: actions/configure-pages@v4
       - uses: actions/upload-pages-artifact@v3
         with:
