@@ -1,4 +1,4 @@
-import React, {useState, useMemo} from "react";
+import {useState, useMemo} from "react";
 import {
     calculateFamilyQuotient,
     calculateNetTaxableIncome,
@@ -6,23 +6,25 @@ import {
     calculateTax, calculateTaxPerBracket
 } from "@/functions/tax";
 
+import {Situation} from "@/types";
+
 type FormValues = {
     gain: number;
-    isMarried: boolean;
+    situation: Situation;
     children: number;
     CMIChildren: number;
 };
 
 const initialState: FormValues = {
     gain: 0,
-    isMarried: false,
+    situation: Situation.SINGLE,
     children: 0,
     CMIChildren: 0
 };
 
 type useTaxReturn = {
     tax: FormValues,
-    handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void,
+    handleChange: (e: React.ChangeEvent<HTMLInputElement|HTMLSelectElement>) => void,
     quotient: number,
     netTaxableIncome: number,
     percentageOfSalary: number,
@@ -35,19 +37,16 @@ export function useTax (): useTaxReturn {
 
     const [tax, setTax] = useState<FormValues>(initialState);
 
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const { name, value, checked, type } = e.target;
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement|HTMLSelectElement>) => {
+        const { name, value } = e.target;
         setTax(prev => {
-            if (type === 'checkbox') {
-                return {...prev, [name]: checked}
-            }
-            return {...prev, [name]: Number(value) || 0}
+            return {...prev, [name]: Math.max(0, Number(value)) || 0}
         })
     };
 
     const quotient: number = useMemo(() => {
-        return calculateFamilyQuotient(tax.isMarried, tax.children, tax.CMIChildren)
-    }, [tax.isMarried, tax.children, tax.CMIChildren]);
+        return calculateFamilyQuotient(tax.situation, tax.children, tax.CMIChildren)
+    }, [tax.situation, tax.children, tax.CMIChildren]);
 
     const netTaxableIncome: number = calculateNetTaxableIncome(tax.gain, quotient);
 
@@ -60,11 +59,11 @@ export function useTax (): useTaxReturn {
     return {
         tax,
         handleChange,
-        quotient: quotient,
-        netTaxableIncome: netTaxableIncome,
-        percentageOfSalary: percentageOfSalary,
-        afterTaxIncome : tax.gain - taxToPay,
-        taxToPay : taxToPay,
-        taxPerBracket: taxPerBracket
+        quotient,
+        netTaxableIncome,
+        percentageOfSalary,
+        afterTaxIncome: tax.gain - taxToPay,
+        taxToPay,
+        taxPerBracket
     }
 }

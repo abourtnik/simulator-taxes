@@ -19,6 +19,7 @@ export function Input({name, type= 'number', label, help, value, onChange}: Prop
                 id={name}
                 onChange={onChange}
                 value={value}
+                min={0}
             />
             {help && <small className={'text-sm text-gray-500 text-left'}>{help}</small>}
         </div>

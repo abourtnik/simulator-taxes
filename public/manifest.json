@@ -3,9 +3,9 @@
   "name": "Simulateur impôt sur le revenu",
   "short_name": "TS",
   "icons": [
-    { "src": "/icons/favicon.ico", "type": "image/x-icon", "sizes": "16x16 32x32" },
-    { "src": "/icons/icon-192.png", "type": "image/png", "sizes": "192x192" },
-    { "src": "/icons/icon-512.png", "type": "image/png", "sizes": "512x512" }
+    { "src": "/simulator-taxes/icons/favicon.ico", "type": "image/x-icon", "sizes": "16x16 32x32" },
+    { "src": "/simulator-taxes/icons/icon-192.png", "type": "image/png", "sizes": "192x192" },
+    { "src": "/simulator-taxes/icons/icon-512.png", "type": "image/png", "sizes": "512x512" }
   ],
   "theme_color": "#FF6174",
   "background_color": "#FF6174",

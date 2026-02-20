@@ -1,10 +1,21 @@
 import {PARTS} from '@/config'
+import {Situation} from "@/types";
 
-export function calculateFamilyQuotient(isMarried: boolean, children: number, handicappedChildren: number): number {
+export function calculateFamilyQuotient(situation: Situation, children: number, handicappedChildren: number): number {
 
-    const base = isMarried ? 2 : 1;
+    if (children < 0 || handicappedChildren < 0) {
+        throw new Error('Children count cannot be negative');
+    }
 
-    const childrenParts = Math.min(children, 2) * 0.5 + Math.max(children - 2, 0);
+    if (handicappedChildren > children) {
+        // throw new Error('Handicapped children cannot exceed total children');
+    }
+
+    const isSingle= [Situation.SINGLE, Situation.FREE, Situation.DIVORCED, Situation.WIDOWER].includes(situation);
+
+    const base: number = isSingle ? 1 : 2;
+
+    const childrenParts: number = Math.min(children, 2) * 0.5 + Math.max(children - 2, 0);
 
     return base + childrenParts + handicappedChildren;
 }
@@ -36,9 +47,10 @@ export function calculateTaxPerBracket(netTaxableIncome: number): number[] {
 
 export function calculateTax(netTaxableIncome: number, quotient: number): number {
 
-    const sum = calculateTaxPerBracket(netTaxableIncome).reduce((acc, curr) => acc + curr, 0);
+    const taxPerBracket = calculateTaxPerBracket(netTaxableIncome);
+    const sum = taxPerBracket.reduce((acc, curr) => acc + curr, 0);
 
-    return sum / quotient;
+    return Math.round(sum * quotient);
 }
 
 export function calculatePercentageOfSalary(taxToPay: number, gain: number): number {

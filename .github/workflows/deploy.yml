@@ -10,8 +10,8 @@ permissions:
   id-token: write
 
 jobs:
-  test:
-    name: Run Tests
+  build-and-test:
+    name: Build & Test
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -19,10 +19,12 @@ jobs:
         uses: oven-sh/setup-bun@v2
         with:
           bun-version: 1.3.1
-      - name: 📦 Install Dependencies 2
+      - name: 📦 Install Dependencies
         run: bun install
       - name: 🏗 Execute tests
         run: bun run test
+      - name: 🏗 Execute lint
+        run: bun run lint
       - name: 🏗 Build
         run: bun run build
       - name: Upload build artifact
@@ -31,8 +33,8 @@ jobs:
            name: site-dist
            path: ./dist
   deploy:
-    name: Deploy
-    needs: test
+    name: Deploy to GitHub Pages
+    needs: build-and-test
     if: success()
     runs-on: ubuntu-latest
     steps:
