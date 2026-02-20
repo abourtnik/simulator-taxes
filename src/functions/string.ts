@@ -1,6 +1,6 @@
 import {Option} from "@/types";
 
-export function enumToOptions(enumObject : any): Option[] {
+export function enumToOptions(enumObject : Record<string, string>): Option[] {
     return Object.values(enumObject)
         .filter((v) => typeof v === 'number')
         .map(value => ({
