@@ -1,4 +1,4 @@
-type Part = {
+export type Part = {
     lowerLimit: number,
     upperLimit: number,
     tax: number

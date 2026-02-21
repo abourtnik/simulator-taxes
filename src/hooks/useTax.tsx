@@ -41,7 +41,7 @@ export function useTax (): useTaxReturn {
         const { name, value } = e.target;
         setTax(prev => {
             return {...prev, [name]: Math.max(0, Number(value)) || 0}
-        })
+        });
     };
 
     const quotient: number = useMemo(() => {

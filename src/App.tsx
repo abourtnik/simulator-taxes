@@ -1,7 +1,6 @@
-import {Card, Input, Select, Table} from '@/components/ui'
-import {Header, Hero, Footer} from '@/components'
+import {Card, Input, Select} from '@/components/ui'
+import {Header, Hero, Footer, ResultsTable} from '@/components'
 import {useTax} from "@/hooks/useTax";
-import {PARTS} from '@/config'
 import numeral from 'numeral'
 import {enumToOptions} from "@/functions/string";
 import {Situation} from "@/types";
@@ -16,15 +15,8 @@ function App() {
         taxToPay,
         percentageOfSalary,
         afterTaxIncome,
-        taxPerBracket,
+        taxPerBracket
     } = useTax();
-
-    const tableData = PARTS.map((part, index) => ([
-        index + 1,
-        `${numeral(part.lowerLimit).format('0,0')} € - ${numeral(part.upperLimit).format('0,0')} €`,
-        `${part.tax * 100}%`,
-        `${numeral(taxPerBracket[index] ?? 0).format('0,0')} €`
-    ]))
 
     return (
         <>
@@ -81,10 +73,7 @@ function App() {
                                     <div className={'font-bold text-xl'}>Revenus après impôts : {numeral(afterTaxIncome).format('0,0')} €</div>
                                 </div>
                                 <h3 className={'text-lg font-bold py-3 text-black'}>Detail par tranche d&apos;imposition</h3>
-                                <Table
-                                    columns={['Tranche n°', 'Montant des revenus', 'Imposition', 'Impôt payé']}
-                                    data={tableData}
-                                />
+                                <ResultsTable taxPerBracket={taxPerBracket} />
                             </div>
                         </Card>
                     </section>
