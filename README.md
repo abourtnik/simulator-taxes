@@ -34,12 +34,6 @@
 
 ---
 
-## 🔒 Security
-
-If you discover security vulnerabilities, please email **contact@antonbourtnik.fr** instead of using the issue tracker.
-
----
-
 <div align="center">
 
 **Made with ❤️ by [Anton Bourtnik](https://github.com/abourtnik)**
